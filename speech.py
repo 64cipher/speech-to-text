@@ -10,10 +10,10 @@ def speech_to_text():
     with sr.Microphone() as source:
         print("Parlez maintenant...")
         try:
-            audio = r.listen(source, phrase_time_limit=5)  # Écoute pendant 5 secondes
+            audio = r.listen(source)  # Écoute sans limite de temps
         except sr.WaitTimeoutError:
-             print("Délai dépassé. Aucun son détecté")
-             return None
+            print("Délai dépassé. Aucun son détecté")
+            return None
         print("Reconnaissance en cours...")
 
     try:
@@ -30,6 +30,7 @@ def speech_to_text():
 def write_text(text):
     """Utilise pynput pour simuler la saisie du texte."""
     keyboard = Controller()
+    # on tape le texte en une fois et ce sera souvent suffisant
     keyboard.type(text)
 
 def main():
@@ -42,7 +43,6 @@ def main():
             keyboard = Controller()
             keyboard.press(Key.enter)
             keyboard.release(Key.enter)
-        time.sleep(0.5) # Pause de 0.5 seconde pour éviter une trop grande sollicitation du processeur
         
 if __name__ == "__main__":
     main()
